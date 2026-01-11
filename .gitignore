@@ -16,6 +16,7 @@ dist/
 artifacts/
 logs/
 *.log
+ORCH_JOURNAL.md
 
 # OS
 .DS_Store
