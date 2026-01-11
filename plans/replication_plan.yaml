@@ -1,0 +1,115 @@
+version: 1
+goal: "DLC-quality replication plan for He Is Coming systems and modes"
+evidence:
+  - artifacts/he_is_coming_clean_v2/synthesis.md
+  - artifacts/he_is_coming_extra_v1/synthesis.md
+  - artifacts/he_is_coming_modes_v1/synthesis.md
+  - artifacts/he_is_coming_research/steam_announcements_summary.md
+  - docs/he_is_coming/audit/consolidated_audit.md
+
+phases:
+  - id: systems_foundation
+    intent: "Recreate the core deterministic systems that power combat and time."
+    tasks:
+      - id: map_time_system
+        desc: "Grid map, fog-of-war, day/night timeline, boss cadence, night FOV."
+        acceptance:
+          - "Movement advances timeline; night reduces visibility."
+          - "Boss trigger every 3 days with forecast marker."
+      - id: combat_sim
+        desc: "Auto-battle with HP/Attack/Armor/Speed; speed-driven initiative."
+        acceptance:
+          - "Armor absorbs damage before HP and refreshes after battle."
+          - "Speed controls attack order and extra strikes."
+      - id: status_engine
+        desc: "Implement Wounded, Exposed, Freeze, Thorns, Poison, Acid, Stun, Riptide."
+        acceptance:
+          - "Status triggers match conditions (Wounded <=50% HP, Exposed on first armor break)."
+          - "Status stacks apply and decay per rules."
+
+  - id: item_and_progression
+    intent: "Recreate item triggers, upgrades, and meta-progression."
+    tasks:
+      - id: item_trigger_order
+        desc: "Slot-ordered item trigger system with battle-start/on-hit/end-turn conditions."
+        acceptance:
+          - "Items trigger in fixed slot order every battle."
+      - id: forge_edges
+        desc: "Weapon edge replacement system with stat/keyword modifiers."
+        acceptance:
+          - "Edges replace prior edge and change combat effects."
+      - id: golem_merge
+        desc: "Merge identical items into golden tier upgrades."
+        acceptance:
+          - "Two identical items produce a stronger golden version."
+      - id: compendium_grid
+        desc: "Spatial unlock grid that expands the item pool."
+        acceptance:
+          - "Completing a challenge unlocks adjacent nodes and adds items to pool."
+
+  - id: world_nodes_and_utilities
+    intent: "Add run-shaping nodes and utility systems."
+    tasks:
+      - id: merchant_and_economy
+        desc: "Gold economy, merchants, and purchase flow."
+        acceptance:
+          - "Gold accrues from combat and can be spent at shops."
+      - id: campfire_and_rest
+        desc: "Campfire rest (heal 10) and time skip."
+        acceptance:
+          - "Campfire heals and advances time."
+      - id: special_nodes
+        desc: "Fairy transform, Cauldron food combining, Horse carriage travel."
+        acceptance:
+          - "Each node modifies the run state and is discoverable on the map."
+      - id: banish
+        desc: "Remove an item from the pool for the remainder of a run."
+        acceptance:
+          - "Banished items do not reappear in the same run."
+
+  - id: modes
+    intent: "Implement multiplayer modes and required UI."
+    tasks:
+      - id: kingmaker_async
+        desc: "Async ladder runs vs champion builds with crown rank."
+        acceptance:
+          - "Bundle selection (3) and king duel flow are present."
+          - "Rank/crown UI tracks progression."
+          - "Crown gains on victory (+1) with visible crown track, thresholds, and variable target lengths."
+      - id: friend_battle_realtime
+        desc: "Real-time 1v1 with shared seed, lobby code, and round cadence."
+        acceptance:
+          - "Shared seed runs; map phase syncs into battle phase."
+          - "Opponent inspection and post-battle summaries available."
+
+  - id: dlc_content_pack
+    intent: "Deliver DLC content that integrates with all systems."
+    tasks:
+      - id: new_biome
+        desc: "New region with distinct enemies, POIs, and loot tags."
+        acceptance:
+          - "Biome-specific items and enemies appear in pool."
+      - id: new_boss_and_minions
+        desc: "Add 1 boss + 4-6 enemies with unique keywords."
+        acceptance:
+          - "Boss appears at correct cadence with clear counters."
+      - id: new_items_and_sets
+        desc: "Add 8-12 items, including a set bonus and 2 status effects."
+        acceptance:
+          - "Items integrate into compendium and bundle selection."
+
+  - id: qa_validation
+    intent: "Prove determinism, balance, and mode parity."
+    tasks:
+      - id: deterministic_seed
+        desc: "Shared seed tests for friend battle parity."
+        acceptance:
+          - "Same-seed runs yield identical item rolls."
+      - id: trigger_order_tests
+        desc: "Regression tests for slot order and status triggers."
+        acceptance:
+          - "Slot order remains stable across patches."
+      - id: balance_smoke
+        desc: "Simulated runs across difficulties and regions."
+        acceptance:
+          - "Boss fights remain winnable with intended counters."
