@@ -1,0 +1,21 @@
+# Secrets / local configs
+.env
+*.env
+cookies.txt
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+dist/
+
+# Build artifacts
+artifacts/
+logs/
+*.log
+
+# OS
+.DS_Store
